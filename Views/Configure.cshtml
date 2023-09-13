@@ -1,0 +1,117 @@
+﻿@model ConfigModel
+
+@{
+    Layout = "_ConfigurePlugin";
+}
+
+
+<script>
+    $(document).ready(function () {
+        $("#@Html.IdFor(model => model.SetCredentialsManually)").click(toggleCredentials);
+        toggleCredentials();
+    })
+
+    function toggleCredentials() {
+        if ($('#@Html.IdFor(model => model.SetCredentialsManually)').is(':checked')) {
+            $('#pnlCredentials').showElement();
+            $('#pnlDescription').showElement();
+    @if (!Model.IsConfigured)
+    {
+        <text>
+                        $('#pnlSave').showElement();
+                    $('#pnlLearnMore').showElement();
+        </text>
+    }
+            }
+        else {
+            $('#pnlCredentials').hideElement();
+            $('#pnlDescription').hideElement();
+    @if (!Model.IsConfigured)
+    {
+        <text>
+                        $('#pnlSave').hideElement();
+                    $('#pnlLearnMore').hideElement();
+        </text>
+    }
+            }
+    }
+</script>
+
+<form asp-controller="MercadoPago" asp-action="Configure" method="post">
+    <div class="cards-group">
+        <div class="card card-default">
+            <div class="card-header">
+                <p id="pnlDescription" class="d-none">
+                    Configurações do Plugin de pagamento Mercado Pago<br />
+                </p>
+            </div>
+            <div class="card-body">
+                <div class="form-group-row">
+                    <div class="col-3">
+                        <nop-override-store-checkbox asp-for="SetCredentialsManually_OverrideForStore" asp-input="SetCredentialsManually" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="SetCredentialsManually" />
+                    </div>
+                    <div class="col-9">
+                        <nop-editor asp-for="SetCredentialsManually" />
+                        <span asp-validation-for="SetCredentialsManually"></span>
+                    </div>
+                </div>
+                <nop-nested-setting asp-for="SetCredentialsManually" id="pnlCredentials" disable-auto-generation="true">
+                    <!-- PubKeyProd -->
+                    <div class="form-group-row">
+                        <div class="col-3">
+                            <nop-override-store-checkbox asp-for="PubKeyProd_OverrideForStore" asp-input="PubKeyProd" asp-store-scope="@Model.ActiveStoreScopeConfiguration" style="opacity: 0%;" />
+                            <label asp-for="PubKeyProd">Chave Pública (Produção)</label>
+                        </div>
+                        <div class="col-9">
+                            <nop-editor asp-for="PubKeyProd" spellcheck="false" asp-required="true" html-attributes="@(new { value = Model.PubKeyProd })" />
+                            <span asp-validation-for="PubKeyProd"></span>
+                        </div>
+                    </div>
+                    <!-- PubKeyProd -->
+                    <!-- PubKeySand -->
+                    <div class="form-group-row">
+                        <div class="col-3">
+                            <nop-override-store-checkbox asp-for="PubKeySand_OverrideForStore" asp-input="PubKeySand" asp-store-scope="@Model.ActiveStoreScopeConfiguration" style="opacity: 0%;" />
+                            <label asp-for="PubKeySand">Chave Pública (Homologação)</label>
+                        </div>
+                        <div class="col-9">
+                            <nop-editor asp-for="PubKeySand" spellcheck="false" asp-required="true" html-attributes="@(new { value = Model.PubKeySand })" />
+                            <span asp-validation-for="PubKeySand"></span>
+                        </div>
+                    </div>
+                    <!-- PubKeySand -->
+                    <!-- SecKeyProd -->
+                    <div class="form-group-row">
+                        <div class="col-3">
+                            <nop-override-store-checkbox asp-for="SecKeyProd_OverrideForStore" asp-input="SecKeyProd" asp-store-scope="@Model.ActiveStoreScopeConfiguration" style="opacity: 0%;" />
+                            <label asp-for="SecKeyProd">Chave Secreta (Produção)</label>
+                        </div>
+                        <div class="col-9">
+                            <nop-editor asp-for="SecKeyProd" spellcheck="false" asp-required="true" html-attributes="@(new { value = Model.SecKeyProd })" />
+                            <span asp-validation-for="SecKeyProd"></span>
+                        </div>
+                    </div>
+                    <!-- SecKeyProd -->
+                    <!-- SecKeySand -->
+                    <div class="form-group-row">
+                        <div class="col-3">
+                            <nop-override-store-checkbox asp-for="SecKeySand_OverrideForStore" asp-input="SecKeySand" asp-store-scope="@Model.ActiveStoreScopeConfiguration" style="opacity: 0%;" />
+                            <label asp-for="SecKeySand">Chave Secreta (Homologação)</label>
+                        </div>
+                        <div class="col-9">
+                            <nop-editor asp-for="SecKeySand" spellcheck="false" asp-required="true" html-attributes="@(new { value = Model.SecKeySand })" />
+                            <span asp-validation-for="SecKeySand"></span>
+                        </div>
+                    </div>
+                    <!-- SecKeySand -->
+                </nop-nested-setting>
+            </div>
+            <div class="form-group row" id="pnlSave">
+                <div class="col-md-9 offset-md-3">
+                    <button type="submit" name="save" class="btn btn-primary">@T("Admin.Common.Save")</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

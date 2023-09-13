@@ -1,0 +1,10 @@
+C:\Users\developer\source\repos\Nop.Plugin.Payments.PagarMe\obj\Debug\net7.0\Nop.Plugin.Payments.PagarMe.csproj.AssemblyReference.cache
+C:\Users\developer\source\repos\Nop.Plugin.Payments.PagarMe\obj\Debug\net7.0\Nop.Plugin.Payments.PagarMe.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\developer\source\repos\Nop.Plugin.Payments.PagarMe\obj\Debug\net7.0\Nop.Plugin.Payments.PagarMe.AssemblyInfoInputs.cache
+C:\Users\developer\source\repos\Nop.Plugin.Payments.PagarMe\obj\Debug\net7.0\Nop.Plugin.Payments.PagarMe.AssemblyInfo.cs
+C:\Users\developer\source\repos\Nop.Plugin.Payments.PagarMe\obj\Debug\net7.0\Nop.Plugin.Payments.PagarMe.csproj.CoreCompileInputs.cache
+C:\Fontes\nopCommerce_4.60.2_Source_v2\src\Plugins\Nop.Plugin.Payments.PagarMe\obj\Debug\net7.0\Nop.Plugin.Payments.PagarMe.csproj.AssemblyReference.cache
+C:\Fontes\nopCommerce_4.60.2_Source_v2\src\Plugins\Nop.Plugin.Payments.PagarMe\obj\Debug\net7.0\Nop.Plugin.Payments.PagarMe.GeneratedMSBuildEditorConfig.editorconfig
+C:\Fontes\nopCommerce_4.60.2_Source_v2\src\Plugins\Nop.Plugin.Payments.PagarMe\obj\Debug\net7.0\Nop.Plugin.Payments.PagarMe.AssemblyInfoInputs.cache
+C:\Fontes\nopCommerce_4.60.2_Source_v2\src\Plugins\Nop.Plugin.Payments.PagarMe\obj\Debug\net7.0\Nop.Plugin.Payments.PagarMe.AssemblyInfo.cs
+C:\Fontes\nopCommerce_4.60.2_Source_v2\src\Plugins\Nop.Plugin.Payments.PagarMe\obj\Debug\net7.0\Nop.Plugin.Payments.PagarMe.csproj.CoreCompileInputs.cache

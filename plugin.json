@@ -1,0 +1,11 @@
+{
+  "Group": "Payment methods",
+  "FriendlyName": "Pagar.Me",
+  "SystemName": "Payments.PagarMe",
+  "Version": "1.0",
+  "SupportedVersions": [ "4.70" ],
+  "Author": "Paulo Grechi",
+  "DisplayOrder": -1,
+  "FileName": "Nop.Plugin.Payments.PagarMe.dll",
+  "Description": ""
+}

@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "dgSpecHash": "YX8oU4MU6kjsUjT/f1t/YUsH3utLRo+FUbJE9u95a2IpwhUbpo3LBjE0PIOzuaSZSgQSDnEh+bPD/126JQLn8g==",
+  "success": false,
+  "projectFilePath": "C:\\Fontes-new\\Nop.Plugin.Payments.PagarMe\\Nop.Plugin.Payments.PagarMe.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "Não é possível encontrar o projeto 'C:\\Presentation\\Nop.Web.Framework\\Nop.Web.Framework.csproj'. Verifique se a referência do projeto é válida e se o arquivo de projeto existe.",
+      "libraryId": "C:\\Presentation\\Nop.Web.Framework\\Nop.Web.Framework.csproj",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "Não é possível encontrar o projeto 'C:\\Presentation\\Nop.Web\\Nop.Web.csproj'. Verifique se a referência do projeto é válida e se o arquivo de projeto existe.",
+      "libraryId": "C:\\Presentation\\Nop.Web\\Nop.Web.csproj",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
+}

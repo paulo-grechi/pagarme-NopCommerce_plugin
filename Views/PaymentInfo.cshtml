@@ -1,0 +1,33 @@
+﻿@using Nop.Plugin.Payments.MercadoPago.Enums
+@using Nop.Plugin.Payments.MercadoPago.Services
+@model PaymentInfoModel
+
+<input type="hidden" asp-for="Errors" />
+<img src="@Model.QRCode" />
+<br />
+<label>Em situação de o QRCode não conseguir ser lido, ou situação parecida, link abaixo para enviar a chave copia-e-cola para o número cadastrado do cliente</label>
+<br />
+<a class="link-mp" href="@Model.UrlPix">@Model.UrlPix</a>
+
+<style>
+    .link-mp {
+        color: cyan;
+        text-decoration: underline;
+        text-decoration-color: cyan;
+    }
+
+        .link-mp:hover {
+            color: darkcyan;
+            text-decoration-color: darkcyan;
+        }
+
+        .link-mp:active {
+            color: mediumpurple;
+            text-decoration-color: mediumpurple;
+        }
+
+        .link-mp:after {
+            color: mediumpurple;
+            text-decoration-color: mediumpurple;
+        }
+</style>
