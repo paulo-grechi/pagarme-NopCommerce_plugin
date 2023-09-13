@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Nop.Plugin.Payments.PagarMe
-build_property.ProjectDir = C:\Fontes-new\Nop.Plugin.Payments.PagarMe\
+build_property.ProjectDir = C:\Fontes-new\nopCommerce-develop\nopCommerce-develop\src\Plugins\Nop.Plugin.Payments.PagarMe\

@@ -1,33 +1,49 @@
-﻿@using Nop.Plugin.Payments.MercadoPago.Enums
-@using Nop.Plugin.Payments.MercadoPago.Services
+﻿@using Nop.Plugin.Payments.PagarMe.Services;
 @model PaymentInfoModel
 
+<script>
+    function changedPayMethod(event) {
+        var dividers = document.getElementsByClassName('ctrl-paymethod');
+        console.log(dividers)
+        for (var i = 0; i < dividers.length; i++) {
+            dividers[i].classList.add('hidden');
+        }
+        var paymethod = document.getElementsByClassName(event.target.value);
+        console.log(paymethod);
+        for (var i = 0; i < paymethod.length; i++) {
+            paymethod[i].classList.remove('hidden');
+        }
+    }
+    $(document).ready(function () {
+        let frame = document.getElementById("frame-checkout");
+        frame.src = $("#checkout").val();
+    })
+</script>
+
+@if (Model.UrlCheckout != null && !Model.UrlCheckout.Equals(""))
+{
+    <iframe id="frame-checkout" src="@Model.UrlCheckout" style="width: 100% !important; height: 600px !important; border: none !important" seamless></iframe>
+}
+
 <input type="hidden" asp-for="Errors" />
-<img src="@Model.QRCode" />
-<br />
-<label>Em situação de o QRCode não conseguir ser lido, ou situação parecida, link abaixo para enviar a chave copia-e-cola para o número cadastrado do cliente</label>
-<br />
-<a class="link-mp" href="@Model.UrlPix">@Model.UrlPix</a>
+<input type="text" class="hidden" asp-for="UrlCheckout" id="checkout" />
 
 <style>
-    .link-mp {
-        color: cyan;
-        text-decoration: underline;
-        text-decoration-color: cyan;
+    .hidden {
+        opacity: 0;
+        position: absolute;
     }
 
-        .link-mp:hover {
-            color: darkcyan;
-            text-decoration-color: darkcyan;
-        }
+    input {
+        border-radius: 8px !important;
+    }
 
-        .link-mp:active {
-            color: mediumpurple;
-            text-decoration-color: mediumpurple;
-        }
+    select {
+        border-radius: 8px !important;
+    }
 
-        .link-mp:after {
-            color: mediumpurple;
-            text-decoration-color: mediumpurple;
-        }
+    .payment-info-next-step-button {
+        opacity: 0 !important;
+    }
+
 </style>

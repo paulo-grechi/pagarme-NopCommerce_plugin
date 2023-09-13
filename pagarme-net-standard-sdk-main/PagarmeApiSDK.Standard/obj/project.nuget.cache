@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "dgSpecHash": "uh6ZpBUrWz6e0Ga01dpLNdLQh19u30GpX707VE3X//n2P6w2YhOp1I8jc1Y1QqTckB8STomquzF6RL0IVQevvg==",
+  "success": true,
+  "projectFilePath": "C:\\Fontes-new\\nopCommerce-develop\\nopCommerce-develop\\src\\Plugins\\Nop.Plugin.Payments.PagarMe\\pagarme-net-standard-sdk-main\\PagarmeApiSDK.Standard\\PagarmeApiSDK.Standard.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\saulo\\.nuget\\packages\\apimatic.core\\0.2.6\\apimatic.core.0.2.6.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\jsonsubtypes\\2.0.1\\jsonsubtypes.2.0.1.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\microsoft.json.pointer\\2.3.0\\microsoft.json.pointer.2.3.0.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\polly\\7.2.3\\polly.7.2.3.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\system.numerics.vectors\\4.4.0\\system.numerics.vectors.4.4.0.nupkg.sha512",
+    "C:\\Users\\saulo\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

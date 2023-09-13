@@ -45,11 +45,10 @@ namespace Nop.Plugin.Payments.PagarMe.Controllers
             var settings = _settingService.LoadSetting<PagarMeSettings>(storeScope);
             var model = new ConfigModel
             {
-                AppId = settings.AppId,
-                Token = settings.Token,
-                SecretKey = settings.SecretKey,
-                ServerKey = settings.ServerKey,
-                UserId = settings.UserId
+                SecKeyProd = settings.SecKeyProd,
+                SecKeySand = settings.SecKeySand,
+                PubKeyProd = settings.PubKeyProd,
+                PubKeySand = settings.PubKeySand
             };
             return View("~/Plugins/Payments.PagarMe/Views/Configure.cshtml", model);
         }
@@ -68,11 +67,10 @@ namespace Nop.Plugin.Payments.PagarMe.Controllers
             }
             var storeScope = _storeContext.GetActiveStoreScopeConfigurationAsync().Result;
             var settings = _settingService.LoadSetting<PagarMeSettings>(storeScope);
-            settings.AppId = model.AppId;
-            settings.Token = model.Token;
-            settings.SecretKey = model.SecretKey;
-            settings.ServerKey = model.ServerKey;
-            settings.UserId = model.UserId;
+            settings.SecKeySand = model.SecKeySand;
+            settings.SecKeyProd = model.SecKeyProd;
+            settings.PubKeySand = model.PubKeySand;
+            settings.PubKeyProd = model.PubKeyProd;
 
             _settingService.SaveSetting(settings);
 
