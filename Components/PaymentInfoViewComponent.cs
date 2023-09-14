@@ -233,7 +233,7 @@ namespace Nop.Plugin.Payments.PagarMe.Components
                     ExpiresIn = 120,
                     DefaultPaymentMethod = "",
                     SkipCheckoutSuccessPage = false,
-                    //SuccessUrl = "/onepagecheckout#opc-confirm_order",
+                    SuccessUrl = "/onepagecheckout#opc-confirm_order",
                     CustomerEditable = true,
                     BillingAddressEditable = true,
                     BillingAddress = customerPagarme.Address,
