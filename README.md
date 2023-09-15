@@ -1,5 +1,5 @@
 # Plugin Pagar.Me para NopCommerce
-Este plugin usa o [SDK oficial da Pagar.Me](https://github.com/pagarme/pagarme-net-standard-sdk/tree/main)
+Este plugin usa o [SDK oficial da Pagar.Me pada .NET](https://github.com/pagarme/pagarme-net-standard-sdk/tree/main)
  - O nome da Pasta do projeto deve ser Nop.Plugin.Payments.PagarMe
 ## Configurações na NopCommerce
 Para utilizar este plugin deve-se ajustar na NopCommerce o atributo customizado para o CPF, que deve ser obrigatório
