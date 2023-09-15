@@ -231,7 +231,6 @@ namespace Nop.Plugin.Payments.PagarMe.Components
                 {
                     AcceptedPaymentMethods = payMethods,
                     ExpiresIn = 120,
-                    DefaultPaymentMethod = "",
                     SkipCheckoutSuccessPage = false,
                     SuccessUrl = "/onepagecheckout#opc-confirm_order",
                     CustomerEditable = true,
@@ -323,7 +322,7 @@ namespace Nop.Plugin.Payments.PagarMe.Components
                 {
                     Amount = int.Parse((product.Price * 100).ToString().Split(',')[0]),
                     Quantity = cartItem.Quantity,
-                    Description = product.ShortDescription,
+                    Description = product.ShortDescription.Substring(0, 250),
                     Category = product.Name
                 };
                 ItemsPagarMe.Add(ItemPagarme);
