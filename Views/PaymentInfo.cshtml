@@ -20,13 +20,15 @@
     })
 </script>
 
+<input type="hidden" asp-for="Errors" />
+
 @if (Model.UrlCheckout != null && !Model.UrlCheckout.Equals(""))
 {
     <iframe id="frame-checkout" src="@Model.UrlCheckout" style="width: 100% !important; height: 800px !important; border: none !important" seamless></iframe>
 }
 
-<input type="hidden" asp-for="Errors" />
 <input type="text" class="hidden" asp-for="UrlCheckout" id="checkout" />
+<input type="hidden" asp-for="OrderId" />
 
 <style>
     .hidden {
@@ -42,8 +44,8 @@
         border-radius: 8px !important;
     }
 
-    .payment-info-next-step-button {
+    /* .payment-info-next-step-button {
         opacity: 0 !important;
-    }
+    } */
 
 </style>

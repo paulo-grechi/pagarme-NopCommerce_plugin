@@ -41,7 +41,7 @@ namespace Nop.Plugin.Payments.MercadoPago.Components
             {
                 return Content("");
             }
-            PagarMeServices mpService = new PagarMeServices(settings, _setting);
+            PagarMeServices mpService = new PagarMeServices(settings);
             var modelPayment = new PaymentInfoModel();
             return View("~/Plugins/Payments.PagarMe/Views/PaymentInfo.cshtml", modelPayment);
         }

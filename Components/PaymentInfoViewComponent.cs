@@ -88,7 +88,7 @@ namespace Nop.Plugin.Payments.PagarMe.Components
         public async Task<IViewComponentResult> InvokeAsync(string widgetZone, object additionalData)
         {
             var pmSettings = _settingService.LoadSetting<PagarMeSettings>();
-            PagarMeServices PMService = new PagarMeServices(pmSettings, _settingService);
+            PagarMeServices PMService = new PagarMeServices(pmSettings);
             var model = new PaymentInfoModel();
             //prepare order GUID
             var paymentRequest = new ProcessPaymentRequest();
@@ -118,6 +118,7 @@ namespace Nop.Plugin.Payments.PagarMe.Components
                 cont++;
             }
             HttpContext.Session.Set(PagarMeDefault.PaymentRequestSessionKey, bytea);
+            model.OrderId = order.Id;
             model.Errors = error;
             model.UrlPix = url.Replace("+55+55", "+55");
             model.QRCode = qrcode;
@@ -136,7 +137,7 @@ namespace Nop.Plugin.Payments.PagarMe.Components
 
         public async Task<(GetOrderResponse Order, string Error, string UrlPix, string QRCode)> CreateOrderAsync(PagarMeSettings settings, Guid orderGuid)
         {
-            PagarMeServices PMService = new PagarMeServices(settings, _settingService);
+            PagarMeServices PMService = new PagarMeServices(settings);
             if ((string.IsNullOrEmpty(settings.SecKeyProd)) || string.IsNullOrEmpty(settings.PubKeyProd))
                 throw new NopException("Não Configurado");
             var customer = await _workContext.GetCurrentCustomerAsync();

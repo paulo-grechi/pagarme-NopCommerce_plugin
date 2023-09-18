@@ -18,15 +18,13 @@ namespace Nop.Plugin.Payments.PagarMe.Services
         public static string URLBase = "https://api.pagar.me/core/v5";
 
         private PagarMeSettings _settings;
-        private readonly ISettingService _settingService;
 
         public string UrlPix;
         public string QRCode;
 
-        public PagarMeServices(PagarMeSettings settings, ISettingService settingService)
+        public PagarMeServices(PagarMeSettings settings)
         {
             _settings = settings;
-            _settingService = settingService;
         }
 
         public Task<CancelRecurringPaymentResult> CancelRecurringPaymentResult(CancelRecurringPaymentRequest cancelPaymentRequest) => null;
@@ -118,24 +116,40 @@ namespace Nop.Plugin.Payments.PagarMe.Services
             return (UrlPix, QRCode);
         }
 
-        public async Task<PagarMeSettings> RegenToken(Object updateToken)
+        public async Task<GetOrderResponse> GetOrderPagarMe(string orderId)
         {
-            var uri = new Uri($"{URLBase}oauth/token");
-            var reqContent = new StringContent(JsonConvert.SerializeObject(updateToken));
-            using (var httpCli = new HttpClient())
+            try
             {
-                httpCli.BaseAddress = uri;
-                using (var response = httpCli.PostAsync(uri, reqContent).Result)
+                var client = new HttpClient();
+                string authCredentials = _settings.SecKeySand + ":";
+                //string authCredentials = _settings.SecKeyProd + ":";
+                byte[] data = Encoding.ASCII.GetBytes(authCredentials);
+                var auth = Convert.ToBase64String(data);
+                var request = new HttpRequestMessage
                 {
-                    if (response.IsSuccessStatusCode)
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri($"https://api.pagar.me/core/v5/orders/{orderId}"),
+                    Headers =
                     {
-                        var resposta = JObject.Parse(System.Text.Encoding.UTF8.GetString(response.Content.ReadAsByteArrayAsync().Result));
-                        var newSettings = _settingService.LoadSetting<PagarMeSettings>();
-                        _settingService.SaveSetting(newSettings);
-                        return newSettings;
+                        { "accept", "application/json" },
+                        { "authorization", "Basic " + auth },
                     }
-                    throw new Exception(response.ReasonPhrase);
+                };
+                using (var response = await client.SendAsync(request))
+                {
+                    var obj = JObject.Parse(System.Text.Encoding.UTF8.GetString(response.Content.ReadAsByteArrayAsync().Result));
+                    if (obj.SelectToken("message") != null)
+                    {
+                        throw new Exception(obj.SelectToken("message").ToString());
+                    }
+                    var responseJson = System.Text.Encoding.UTF8.GetString(response.Content.ReadAsByteArrayAsync().Result);
+                    GetOrderResponse retorno = JsonConvert.DeserializeObject<GetOrderResponse>(responseJson);
+                    return retorno;
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

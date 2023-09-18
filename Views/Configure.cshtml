@@ -27,28 +27,6 @@
             </div>
             <div class="card-body">
                 <nop-nested-setting id="pnlCredentials" disable-auto-generation="true">
-                    <!-- Username -->
-                    <div class="form-group-row">
-                        <div class="col-3">
-                            <label asp-for="Username">Usuário</label>
-                        </div>
-                        <div class="col-9">
-                            <nop-editor asp-for="Username" spellcheck="false" asp-required="true" html-attributes="@(new { value = Model.Username })" />
-                            <span asp-validation-for="Username"></span>
-                        </div>
-                    </div>
-                    <!-- Username -->
-                    <!-- Pass -->
-                    <div class="form-group-row">
-                        <div class="col-3">
-                            <label asp-for="Pass">Senha</label>
-                        </div>
-                        <div class="col-9">
-                            <nop-editor asp-for="Pass" spellcheck="false" asp-required="true" html-attributes="@(new { value = Model.Pass })" />
-                            <span asp-validation-for="Pass"></span>
-                        </div>
-                    </div>
-                    <!-- Pass -->
                     <!-- PubKeyProd -->
                     <div class="form-group-row">
                         <div class="col-3">

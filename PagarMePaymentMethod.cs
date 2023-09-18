@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nop.Services.Catalog;
 using Nop.Services.Directory;
+using NUglify.Helpers;
 
 namespace Nop.Plugin.Payments.PagarMe
 {
@@ -39,7 +40,8 @@ namespace Nop.Plugin.Payments.PagarMe
             _customerService = customerService;
             _actionContextAccessor = actionContextAccessor;
             _localizationService = localizationService;
-            PMService = new PagarMeServices(_settingService.LoadSetting<PagarMeSettings>(), settingService);
+            var settings = _settingService.LoadSetting<PagarMeSettings>();
+            PMService = new PagarMeServices(settings);
             _productService = productService;
             _countryService = countryService;
         }
@@ -130,51 +132,10 @@ namespace Nop.Plugin.Payments.PagarMe
         {
             try
             {
-                var settings = _settingService.LoadSetting<PagarMeSettings>();
-                var customer = await _customerService.GetCustomerByIdAsync(processPaymentRequest.CustomerId);
-                var country = _countryService.GetCountryByIdAsync(customer.CountryId).Result;
-                var address = _customerService.GetAddressesByCustomerIdAsync(processPaymentRequest.CustomerId).Result;
-                var splitAddress = address[0].Address1.Split(',');
-                var paymentStr = _localizationService.GetResourceAsync("PagarMePaymentCreate").Result;
-                var payment = JsonConvert.DeserializeObject<CreateOrderRequest>(paymentStr);
-                payment.Code = processPaymentRequest.OrderGuid.ToString();
-                var CustomerPagarMe = new CreateCustomerRequest
-                {
-                    Name = customer.FirstName + " " + customer.LastName,
-                    Email = customer.Email,
-                    Type = customer.Company == null ? "individual" : "company",
-                    Address = new CreateAddressRequest
-                    {
-                        City = address[0].City,
-                        Country = country == null ? "BR" : country.TwoLetterIsoCode,
-                        Street = splitAddress[0],
-                        ZipCode = address[0].ZipPostalCode,
-                        Neighborhood = splitAddress[3],
-                        Number = splitAddress[1],
-                        Complement = splitAddress[2],
-                        Line1 = address[0].Address1
-                    },
-                    Phones = new CreatePhonesRequest
-                    {
-                        MobilePhone = new CreatePhoneRequest
-                        {
-                            Number = customer.Phone
-                        }
-                    }
-                };
-                payment.Customer = CustomerPagarMe;
-                JArray shoppingCartStr = JArray.Parse(_localizationService.GetResourceAsync("ShoppingCartInfo").Result);
-                List<ShoppingCartItem> shoppingCart = new List<ShoppingCartItem>();
-                foreach (var item in shoppingCartStr)
-                {
-                    ShoppingCartItem cartItem = JsonConvert.DeserializeObject<ShoppingCartItem>(item.ToString());
-                    shoppingCart.Add(cartItem);
-                }
-                payment.Items = ParseCartItem(shoppingCart);
                 //var PayReturn = await PMService.CreateOrderHttp(payment);
                 var paymentReturn = new ProcessPaymentResult
                 {
-                    NewPaymentStatus = Core.Domain.Payments.PaymentStatus.Pending,
+                    NewPaymentStatus = Core.Domain.Payments.PaymentStatus.Paid
                 };
                 return paymentReturn;
             }
@@ -219,43 +180,22 @@ namespace Nop.Plugin.Payments.PagarMe
 
         public Task<IList<string>> ValidatePaymentFormAsync(IFormCollection form)
         {
-            var itemsList = new List<CreateOrderItemRequest>();
-            var payments = new List<CreatePaymentRequest>();
-            var payment = new CreatePaymentRequest
-            {
-                Checkout = new CreateCheckoutPaymentRequest
-                {
-                    ExpiresIn = 30,
-                    DefaultPaymentMethod = form["SelectedMethod"],
-                    SkipCheckoutSuccessPage = false,
-                    CustomerEditable = true,
-                    BillingAddressEditable = true
-                }
-            };
-            payments.Add(payment);
-            JArray shoppingCartStr = JArray.Parse(_localizationService.GetResourceAsync("ShoppingCartInfo").Result);
-            List<ShoppingCartItem> shoppingCart = new List<ShoppingCartItem>();
-            foreach (var item in shoppingCartStr)
-            {
-                ShoppingCartItem cartItem = JsonConvert.DeserializeObject<ShoppingCartItem>(item.ToString());
-                shoppingCart.Add(cartItem);
-            }
-            var PayRequest = new CreateOrderRequest
-            {
-                Closed = false,
-                Currency = "BRL",
-                Payments = payments,
-                Items = itemsList
-            };
-            _localizationService.AddOrUpdateLocaleResourceAsync("PagarMePaymentCreate", JsonConvert.SerializeObject(PayRequest));
-
             var errors = new List<string>();
+
+            if (form.TryGetValue(nameof(PaymentInfoModel.OrderId), out var orderId) && !StringValues.IsNullOrEmpty(orderId))
+            { 
+                var orderInfo = PMService.GetOrderPagarMe(orderId.ToString()).Result;
+                if(orderInfo.Status.Equals("pending"))
+                {
+                    errors.Add("Aguardande o processamento do pagamento para continuar");
+                }
+            }
 
             //try to get errors from the form parameters
             if (form.TryGetValue(nameof(PaymentInfoModel.Errors), out var errorValue) && !StringValues.IsNullOrEmpty(errorValue))
                 errors.Add(errorValue.ToString());
 
-            return Task.FromResult<IList<string>>(new List<string>());
+            return Task.FromResult<IList<string>>(errors);
         }
 
         public Task<VoidPaymentResult> VoidAsync(VoidPaymentRequest voidPaymentRequest)
