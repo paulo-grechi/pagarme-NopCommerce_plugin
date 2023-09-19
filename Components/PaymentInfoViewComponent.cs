@@ -256,8 +256,6 @@ namespace Nop.Plugin.Payments.PagarMe.Components
                 Customer = customerPagarme
             };
             GetOrderResponse model = PMService.CreateOrderHttp(PayRequest).Result;
-            //GetOrderResponse model = PMService.CreateOrder(PayRequest).Result;
-            //GetOrderResponse model = new GetOrderResponse();
             return (model, "", url, qr);
         }
 
@@ -323,7 +321,7 @@ namespace Nop.Plugin.Payments.PagarMe.Components
                 {
                     Amount = int.Parse((product.Price * 100).ToString().Split(',')[0]),
                     Quantity = cartItem.Quantity,
-                    Description = product.ShortDescription.Substring(0, 250),
+                    Description = product.ShortDescription.Length >= 250 ? product.ShortDescription.Substring(0, 250) : product.ShortDescription,
                     Category = product.Name
                 };
                 ItemsPagarMe.Add(ItemPagarme);

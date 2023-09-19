@@ -28,10 +28,9 @@ namespace Nop.Plugin.Payments.PagarMe.Models
         public bool DisplayButtonsOnShoppingCart { get; set; }
         public int ActiveStoreScopeConfiguration { get; set; }
         public bool SetCredentialsManually_OverrideForStore { get; set; }
-        public bool AppId_OverrideForStore { get; set; }
-        public bool Token_OverrideForStore { get; set; }
-        public bool SecretKey_OverrideForStore { get; set; }
-        public bool ServerKey_OverrideForStore { get; set; }
-        public bool UserId_OverrideForStore { get; set; }
+        public bool PubKeyProd_OverrideForStore { get; set; }
+        public bool PubKeySand_OverrideForStore { get; set; }
+        public bool SecKeyProd_OverrideForStore { get; set; }
+        public bool SecKeySand_OverrideForStore { get; set; }
     }
 }
