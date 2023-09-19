@@ -132,7 +132,12 @@ namespace Nop.Plugin.Payments.PagarMe
         {
             try
             {
-                //var PayReturn = await PMService.CreateOrderHttp(payment);
+                var orderId = await _localizationService.GetResourceAsync("PagarMe.OrderId");
+                var orderInfo = PMService.GetOrderPagarMe(orderId.ToString()).Result;
+                if (orderInfo.Status.Equals("pending"))
+                {
+                    throw new Exception("Pagamento pendente, aguarde alguns instantes e tente novamente");
+                }
                 var paymentReturn = new ProcessPaymentResult
                 {
                     NewPaymentStatus = Core.Domain.Payments.PaymentStatus.Paid
@@ -143,27 +148,6 @@ namespace Nop.Plugin.Payments.PagarMe
             {
                 throw ex;
             }
-        }
-
-        private List<CreateOrderItemRequest> ParseCartItem(List<ShoppingCartItem> shoppingCartItems)
-        {
-            if (shoppingCartItems == null)
-            {
-                return new List<CreateOrderItemRequest>();
-            }
-            List<CreateOrderItemRequest> ItemsPagarMe = new List<CreateOrderItemRequest>();
-            foreach (var cartItem in shoppingCartItems)
-            {
-                var product = _productService.GetProductByIdAsync(cartItem.ProductId).Result;
-                CreateOrderItemRequest ItemPagarme = new CreateOrderItemRequest
-                {
-                    Amount = int.Parse((product.Price * 100).ToString().Split(',')[0]),
-                    Quantity = cartItem.Quantity,
-                    Description = product.Name
-                };
-                ItemsPagarMe.Add(ItemPagarme);
-            }
-            return ItemsPagarMe;
         }
 
         public Task<ProcessPaymentResult> ProcessRecurringPaymentAsync(ProcessPaymentRequest processPaymentRequest)
@@ -185,7 +169,8 @@ namespace Nop.Plugin.Payments.PagarMe
             if (form.TryGetValue(nameof(PaymentInfoModel.OrderId), out var orderId) && !StringValues.IsNullOrEmpty(orderId))
             { 
                 var orderInfo = PMService.GetOrderPagarMe(orderId.ToString()).Result;
-                if(orderInfo.Status.Equals("pending"))
+                _localizationService.AddOrUpdateLocaleResourceAsync("PagarMe.OrderId", orderId.ToString());
+                if (orderInfo.Status.Equals("pending"))
                 {
                     errors.Add("Aguardande o processamento do pagamento para continuar");
                 }

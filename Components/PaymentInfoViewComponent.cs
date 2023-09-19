@@ -175,7 +175,6 @@ namespace Nop.Plugin.Payments.PagarMe.Components
             {
                 shoppingCart.First().CustomerEnteredPrice = Math.Round(shoppingCartTotal ?? decimal.Zero, 2);
             }
-            _localizationService.AddOrUpdateLocaleResourceAsync("ShoppingCartInfo", JsonConvert.SerializeObject(shoppingCart));
             var orderTotal = Math.Round(shoppingCartTotal ?? decimal.Zero, 2);
 
             //orderDetails.Payments.Amount = orderTotal == null ? 0 : (double) orderTotal;
@@ -243,7 +242,7 @@ namespace Nop.Plugin.Payments.PagarMe.Components
                         AdditionalInformation = pixAddInfo
                     }
                 },
-                Amount = int.Parse((orderTotal * 100).ToString().Split(',')[0])
+                Amount = 1//int.Parse((orderTotal * 100).ToString().Split(',')[0])
             };
             payments.Add(payment);
             var PayRequest = new CreateOrderRequest
@@ -319,7 +318,7 @@ namespace Nop.Plugin.Payments.PagarMe.Components
                 var product = _productService.GetProductByIdAsync(cartItem.ProductId).Result;
                 CreateOrderItemRequest ItemPagarme = new CreateOrderItemRequest
                 {
-                    Amount = int.Parse((product.Price * 100).ToString().Split(',')[0]),
+                    Amount = 1,//int.Parse((product.Price * 100).ToString().Split(',')[0]),
                     Quantity = cartItem.Quantity,
                     Description = product.ShortDescription.Length >= 250 ? product.ShortDescription.Substring(0, 250) : product.ShortDescription,
                     Category = product.Name
