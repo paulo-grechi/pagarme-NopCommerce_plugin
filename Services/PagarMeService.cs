@@ -21,10 +21,14 @@ namespace Nop.Plugin.Payments.PagarMe.Services
 
         public string UrlPix;
         public string QRCode;
+        public string authCredentials;
 
         public PagarMeServices(PagarMeSettings settings)
         {
             _settings = settings;
+            authCredentials = _settings.SecKeySand;
+            //authCredentials = _settings.SecKeyProd;
+
         }
 
         public Task<CancelRecurringPaymentResult> CancelRecurringPaymentResult(CancelRecurringPaymentRequest cancelPaymentRequest) => null;
@@ -50,8 +54,6 @@ namespace Nop.Plugin.Payments.PagarMe.Services
             try
             {
                 var client = new HttpClient();
-                string authCredentials = _settings.SecKeySand + ":";
-                //string authCredentials = _settings.SecKeyProd + ":";
                 byte[] data = Encoding.ASCII.GetBytes(authCredentials);
                 var auth = Convert.ToBase64String(data);
                 var request = new HttpRequestMessage
@@ -121,8 +123,6 @@ namespace Nop.Plugin.Payments.PagarMe.Services
             try
             {
                 var client = new HttpClient();
-                string authCredentials = _settings.SecKeySand + ":";
-                //string authCredentials = _settings.SecKeyProd + ":";
                 byte[] data = Encoding.ASCII.GetBytes(authCredentials);
                 var auth = Convert.ToBase64String(data);
                 var request = new HttpRequestMessage
