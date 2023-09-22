@@ -198,6 +198,15 @@ namespace Nop.Plugin.Payments.PagarMe.Components
             pixAddInfo.Add(pixInfo);
             var docxml = XDocument.Parse(customer.CustomCustomerAttributesXML);
             string doc = docxml.Root.Value;
+            string[] addressLines = customer.StreetAddress.Split(',');
+            for (var i = 0; i < addressLines.Count(); i++)
+            {
+                addressLines[i] = addressLines[i].Trim();
+            }
+            string street = addressLines[1];
+            string number = addressLines[0];
+            string neighborhood = addressLines[2];
+            string complement = customer.StreetAddress2;
             CreateCustomerRequest customerPagarme = new CreateCustomerRequest
             {
                 Name = customer.FirstName + " " + customer.LastName,
@@ -206,11 +215,13 @@ namespace Nop.Plugin.Payments.PagarMe.Components
                 Address = new CreateAddressRequest
                 {
                     ZipCode = customer.ZipPostalCode,
-                    Line1 = customer.StreetAddress,
-                    Line2 = customer.StreetAddress2,
                     State = customer.County,
                     City = customer.City,
-                    Country = "BR"
+                    Country = "BR",
+                    Street = street,
+                    Number = number,
+                    Neighborhood = neighborhood,
+                    Complement = complement
                 },
                 Document = doc,
                 Phones = new CreatePhonesRequest
@@ -254,7 +265,8 @@ namespace Nop.Plugin.Payments.PagarMe.Components
                 Items = ParseCartItem(shoppingCart),
                 Customer = customerPagarme
             };
-            GetOrderResponse model = PMService.CreateOrderHttp(PayRequest).Result;
+            //GetOrderResponse model = PMService.CreateOrderHttp(PayRequest).Result;
+            GetOrderResponse model = PMService.CreateOrder(PayRequest).Result;
             return (model, "", url, qr);
         }
 
